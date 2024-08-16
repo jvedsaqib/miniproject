@@ -1,0 +1,92 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container for the content */
+.container {
+    width: 50%;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header */
+.container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Apply Section */
+.apply-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Eligibility Status */
+.eligibility-status {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Eligibility classes */
+.eligible {
+    background-color: #28a745;
+}
+
+.not-eligible {
+    background-color: #dc3545;
+}
+
+/* Button Styling */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
