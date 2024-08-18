@@ -16,6 +16,7 @@
     <div class="topnav" id="home-topnav">
             <nav>
                 <a href="../admin_logout.php" class="split">Sign Out</a>
+                <a href="../admin_home.php">Home</a>
                 <a href="post_job.php">Job Posting</a>
                 <a href="list_job.php">List Jobs</a>
             </nav>

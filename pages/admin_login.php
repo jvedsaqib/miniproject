@@ -35,6 +35,7 @@
         
             // Check if a user is found
             if ($result->num_rows == 1) {
+                $_SESSION['role'] = 'ADMIN';
                 $_SESSION['login_user'] = $admin_username; // Fixed variable
                 header("Location: admin/admin_home.php");
                 exit();

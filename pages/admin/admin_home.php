@@ -1,5 +1,6 @@
 <?php
    include('admin_session.php');
+   print_r($_SESSION);
 ?>
 <html>
 <head>
@@ -14,7 +15,8 @@
             <a href="admin_logout.php" class="split">Sign Out</a>
             <a href="jobs/post_job.php">Job Posting</a>
             <a href="jobs/list_job.php">List Jobs</a>
-            <a href="student_records/add_student.php">Add Student</a>
+            <a href="../issues/list_issues.php">List Issues</a>
+            <a href="../student/add_student_admin.php">Add Student</a>
         </nav>
    </div>
    <h2>Welcome <?php echo $login_session; ?></h2> 

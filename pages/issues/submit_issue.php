@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         echo "Issue submitted successfully.";
+        header("location: ../student/student_home.php");
     } else {
         echo "Error submitting issue.";
     }
