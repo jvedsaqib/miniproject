@@ -1,6 +1,6 @@
 <?php
    include('admin_session.php');
-   print_r($_SESSION);
+   // print_r($_SESSION);
 ?>
 <html>
 <head>

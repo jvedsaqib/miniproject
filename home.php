@@ -15,7 +15,7 @@
     <div class="topnav" id="home-topnav">
         <nav>
             <a class="active" href="#">Home</a> 
-            <a href="#">Summary</a> 
+            <a href="pages\summary\summary_home.php">Summary</a> 
             <a href="pages\student_login.php">Student Login</a> 
             <a href="pages\admin_login.php" class="split">Admin Login</a>
             <a href="javascript:void(0);" class="icon" onclick="myFunction()">

@@ -96,6 +96,8 @@ if (!empty($student['PostgraduateCGPA']) && $student['PostgraduateCGPA'] < $job[
             </span>
             <form action="apply_job.php" method="post">
                 <input type="hidden" name="reference_number" value="<?php echo htmlspecialchars($job['reference_number']); ?>">
+                <input type="hidden" name="job_posting_id" value="<?php echo htmlspecialchars($job['id']); ?>">
+                <input type="hidden" name="student_rollno" value="<?php echo htmlspecialchars($student['StudentRoll']); ?>">
                 <button type="submit" <?php echo !$is_eligible ? 'disabled' : ''; ?>>Apply</button>
             </form>
         </div>
