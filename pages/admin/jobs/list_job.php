@@ -6,13 +6,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Initialize search variable
 $search = '';
 if (isset($_POST['search'])) {
     $search = $_POST['search'];
 }
 
-// Fetch jobs from the database with search functionality
 $sql = "SELECT * FROM job_posting WHERE reference_number LIKE ? OR recruiting_company LIKE ? OR designation LIKE ?";
 $stmt = $conn->prepare($sql);
 $like_search = "%" . $search . "%";
@@ -88,5 +86,5 @@ $result = $stmt->get_result();
 </html>
 
 <?php
-$conn->close(); // Close the database connection
+$conn->close(); 
 ?>

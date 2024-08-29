@@ -34,10 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     designation, remuneration, location, class_x_percentage, class_xii_percentage, graduation_cgpa, postgraduation_cgpa) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    // Prepare the statement
     $stmt = $conn->prepare($sql);
 
-    // Bind the parameters (make sure the number and type match)
     $stmt->bind_param("ssissidssssssssdddd", $reference_number, $post_date, $batch_year, $recruiting_company, $streams, 
     $backlogs, $minimum_cgpa, $eligibility_description, $selection_mode, 
     $selection_mode_description, $selection_process, $selection_date, 

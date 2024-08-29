@@ -25,7 +25,6 @@ if (isset($_POST['submit'])) {
     $imageFileType = strtolower(pathinfo($_FILES["StudentPhoto"]["name"], PATHINFO_EXTENSION));
     $final_file = $target_dir . $StudentRoll . ".jpg";
 
-    // Check for upload errors
     if ($_FILES['StudentPhoto']['error'] !== UPLOAD_ERR_OK) {
         echo "File upload error: " . $_FILES['StudentPhoto']['error'];
         exit();
@@ -39,7 +38,6 @@ if (isset($_POST['submit'])) {
         }
     }
 
-    // Move uploaded file to the target directory
     if (move_uploaded_file($_FILES["StudentPhoto"]["tmp_name"], $final_file)) {
         $StudentPhotoPath = $final_file;
         echo "File uploaded successfully!";
@@ -49,7 +47,6 @@ if (isset($_POST['submit'])) {
         exit();
     }
 
-    // Insert student data into the database using prepared statements
     $stmt = $conn->prepare("INSERT INTO students 
         (StudentName, StudentRoll, StudentEmail, StudentPassword, StudentPhoneNo, StudentAltPhoneNo, StudentSex, StudentDOB, StudentDept, StudentSpecialisation, ClassXPercentage, ClassXIIPercentage, UndergraduateCGPA, PostgraduateCGPA, NumberOfBacklogs, PassoutYear, StudentPhotoPath) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
