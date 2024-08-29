@@ -12,6 +12,7 @@ if (!isset($_SESSION['login_user']) || $_SESSION['role'] !== 'ADMIN') {
 $login_session = $_SESSION['login_user'];
 
 include_once("../../php/connection.php");
+include_once("../../php/mail_details.php");
 
 require('../../php/phpmailer/src/PHPMailer.php');
 require('../../php/phpmailer/src/SMTP.php');
@@ -160,8 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'jvedsaqib1@gmail.com';
-        $mail->Password   = '';
+        $mail->Username   = $send_email;
+        $mail->Password   = $email_password; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->SMTPDebug  = 0; // Set to 2 for debugging output

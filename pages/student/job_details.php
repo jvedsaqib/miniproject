@@ -2,7 +2,10 @@
 // Assuming connection to the database is already established
 include_once("../../php/connection.php"); 
 include('student_session.php');
-session_start();
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);

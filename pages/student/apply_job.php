@@ -1,5 +1,6 @@
 <?php
 include_once("../../php/connection.php"); 
+include_once("../../php/mail_details.php"); 
 include('student_session.php');
 session_start();
 
@@ -73,8 +74,8 @@ $mail->CharSet = 'UTF-8';
 $mail->isSMTP();
 $mail->Host       = 'smtp.gmail.com';
 $mail->SMTPAuth   = true;
-$mail->Username   = 'jvedsaqib1@gmail.com';
-$mail->Password   = '';
+$mail->Username   = $send_email;
+$mail->Password   = $email_password; 
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $mail->Port       = 587;
 $mail->SMTPDebug  = 0; // Set to 2 for debugging output

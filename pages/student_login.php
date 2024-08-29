@@ -1,5 +1,6 @@
 <?php 
 include_once("../php/connection.php");
+include_once("../php/mail_details.php");
 include_once("login_session_clear.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -35,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'jvedsaqib1@gmail.com'; 
-        $mail->Password   = ''; 
+        $mail->Username   = $send_email;
+        $mail->Password   = $email_password; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
