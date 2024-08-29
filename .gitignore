@@ -1,0 +1,5 @@
+# no need to push phpmailer
+php/phpmailer/
+
+# for security ignore mail_details
+php/mail_details.php
