@@ -64,14 +64,7 @@ $conn->close();
     <link rel="stylesheet" href="summary_home.css">
 </head>
 <body>
-    <div class="topnav">
-        <nav>
-            <a href="../../home.php">Home</a> 
-            <a href="">Summary</a> 
-            <a href="../student_login.php">Student Login</a> 
-            <a href="../admin_login.php" class="split">Admin Login</a>
-        </nav>
-    </div>
+
 
     <h1>Placement Summary</h1>
     <div class="chart-row">

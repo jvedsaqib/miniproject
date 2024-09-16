@@ -15,7 +15,9 @@
             <a href="admin_logout.php" class="split">Sign Out</a>
             <a href="jobs/post_job.php">Job Posting</a>
             <a href="jobs/list_job.php">List Jobs</a>
+            <a href="jobs/list_applications.php">List Applications</a>
             <a href="../issues/list_issues.php">List Issues</a>
+
             <a href="../student/add_student_admin.php">Add Student</a>
         </nav>
    </div>

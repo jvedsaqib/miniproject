@@ -58,6 +58,7 @@ $result = $stmt->get_result();
                         <th>Designation</th>
                         <th>Remuneration</th>
                         <th>Location</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,9 @@ $result = $stmt->get_result();
                             <td><?php echo htmlspecialchars($row['designation']); ?></td>
                             <td><?php echo htmlspecialchars($row['remuneration']); ?></td>
                             <td><?php echo htmlspecialchars($row['location']); ?></td>
+                            <td>
+                                <a href="edit_job.php?id=<?php echo $row['id']; ?>">Edit</a>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>
