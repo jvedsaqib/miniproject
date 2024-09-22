@@ -1,6 +1,10 @@
 <?php 
 include_once('php/connection.php');
 
+session_start();
+$_SESSION = array();
+session_destroy();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -63,26 +67,6 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@latest"></script>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .summary-home {
-            width: 100%;
-            height: calc(100vh - 50px); /* (100vh - the height of the topnav) */
-        }
-
-        .summary-home iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-    </style>
 </head>
 <body>
 
@@ -236,6 +220,16 @@ $conn->close();
             });
         });
     </script>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <p><strong>Contact Us:</strong> Email: jvedsaqib@gmail.com | Phone: +91 6291526612</p>
+                <p><strong>TPO Office Hours:</strong> Mon - Fri: 9:00 AM - 6:00 PM</p>
+                <p>&copy; 2024 Job Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>

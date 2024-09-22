@@ -188,6 +188,8 @@ $total_pages = ceil($total_row['total'] / $limit);
                 <td id="actions-col">
                     <form method="post" action="update_application_status.php">
                         <input type="hidden" name="application_id" value="<?php echo htmlspecialchars($row['application_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                        <input type="hidden" name="student_roll" value="<?php echo htmlspecialchars($row['student_roll'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                        <input type="hidden" name="job_post_id" value="<?php echo htmlspecialchars($row['job_post_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         <select name="new_status">
                             <option value="Applied" <?php if ($row['application_status'] == 'Applied') echo 'selected'; ?>>Applied</option>
                             <option value="Shortlisted" <?php if ($row['application_status'] == 'Shortlisted') echo 'selected'; ?>>Shortlisted</option>

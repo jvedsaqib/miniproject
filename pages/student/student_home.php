@@ -37,6 +37,7 @@
    <nav>
       <a href="student_logout.php" class="split">Sign Out</a>
       <a href="posted_jobs.php">Posted Jobs</a>
+      <a href="list_applications.php">List Applied Jobs</a>
    </nav>
    </div>
    <h1>Welcome <?php echo $login_session; ?></h1> 

@@ -1,0 +1,42 @@
+/* General table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+/* Application status specific styling */
+.status-applied {
+    background-color: #d1e7dd; /* Light green */
+    color: #0f5132;
+}
+
+.status-shortlisted {
+    background-color: #fff3cd; /* Light yellow */
+    color: #664d03;
+}
+
+.status-rejected {
+    background-color: #f8d7da; /* Light red */
+    color: #842029;
+}
+
+.status-selected {
+    background-color: #cfe2ff; /* Light blue */
+    color: #084298;
+}
+
+/* Hover effect for rows */
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
