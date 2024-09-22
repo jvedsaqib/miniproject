@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
     echo "DONE ! Redirecting to Home in 5 seconds !";
     sleep(5);
 
-    header("Location: ../../home.php");
+    header("Location: ../../index.php");
         
     
 

@@ -17,22 +17,53 @@ $limit = 10;  // Number of entries per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Build the query
+// Build the dynamic query
 $sql = "SELECT applications.*, students.StudentName, students.StudentDept, students.StudentSpecialisation, job_posting.recruiting_company 
         FROM applications
         JOIN students ON applications.student_roll = students.StudentRoll
         JOIN job_posting ON applications.job_post_id = job_posting.id
-        WHERE (applications.student_roll LIKE ? OR applications.job_post_id LIKE ?)
-        OR (students.StudentDept LIKE ?)
-        OR (students.StudentSpecialisation LIKE ?)
-        LIMIT ?, ?";
-        
+        WHERE 1=1";  // Start with a true condition to allow appending AND clauses
+
+// Adding conditions dynamically based on user input
+$params = [];
+$types = '';
+
+if (!empty($search_roll)) {
+    $sql .= " AND applications.student_roll LIKE ?";
+    $params[] = "%" . $search_roll . "%";
+    $types .= 's';
+}
+
+if (!empty($search_job_id)) {
+    $sql .= " AND applications.job_post_id LIKE ?";
+    $params[] = "%" . $search_job_id . "%";
+    $types .= 's';
+}
+
+if (!empty($filter_dept)) {
+    $sql .= " AND students.StudentDept LIKE ?";
+    $params[] = "%" . $filter_dept . "%";
+    $types .= 's';
+}
+
+if (!empty($filter_specialisation)) {
+    $sql .= " AND students.StudentSpecialisation LIKE ?";
+    $params[] = "%" . $filter_specialisation . "%";
+    $types .= 's';
+}
+
+$sql .= " LIMIT ?, ?";
+$params[] = $offset;
+$params[] = $limit;
+$types .= 'ii';  // For LIMIT and OFFSET
+
 $stmt = $conn->prepare($sql);
-$like_roll = "%" . $search_roll . "%";
-$like_job_id = "%" . $search_job_id . "%";
-$like_dept = "%" . $filter_dept . "%";
-$like_specialisation = "%" . $filter_specialisation . "%";
-$stmt->bind_param("ssssii", $like_roll, $like_job_id, $like_dept, $like_specialisation, $offset, $limit);
+
+// Check if we have any parameters to bind
+if (!empty($types)) {
+    $stmt->bind_param($types, ...$params);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -40,16 +71,49 @@ $result = $stmt->get_result();
 $total_sql = "SELECT COUNT(*) as total FROM applications
               JOIN students ON applications.student_roll = students.StudentRoll
               JOIN job_posting ON applications.job_post_id = job_posting.id
-              WHERE (applications.student_roll LIKE ? OR applications.job_post_id LIKE ?)
-              OR (students.StudentDept LIKE ?)
-              OR (students.StudentSpecialisation LIKE ?)";
+              WHERE 1=1";
+
+// Adding the same dynamic conditions for counting total entries
+$total_params = [];
+$total_types = '';
+
+if (!empty($search_roll)) {
+    $total_sql .= " AND applications.student_roll LIKE ?";
+    $total_params[] = "%" . $search_roll . "%";
+    $total_types .= 's';
+}
+
+if (!empty($search_job_id)) {
+    $total_sql .= " AND applications.job_post_id LIKE ?";
+    $total_params[] = "%" . $search_job_id . "%";
+    $total_types .= 's';
+}
+
+if (!empty($filter_dept)) {
+    $total_sql .= " AND students.StudentDept LIKE ?";
+    $total_params[] = "%" . $filter_dept . "%";
+    $total_types .= 's';
+}
+
+if (!empty($filter_specialisation)) {
+    $total_sql .= " AND students.StudentSpecialisation LIKE ?";
+    $total_params[] = "%" . $filter_specialisation . "%";
+    $total_types .= 's';
+}
+
 $total_stmt = $conn->prepare($total_sql);
-$total_stmt->bind_param("ssss", $like_roll, $like_job_id, $like_dept, $like_specialisation);
+
+// Check if we have any parameters for the count query
+if (!empty($total_types)) {
+    $total_stmt->bind_param($total_types, ...$total_params);
+}
+
 $total_stmt->execute();
 $total_result = $total_stmt->get_result();
 $total_row = $total_result->fetch_assoc();
 $total_pages = ceil($total_row['total'] / $limit);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,48 +159,49 @@ $total_pages = ceil($total_row['total'] / $limit);
         </form>
         <?php if ($result->num_rows > 0): ?>
             <table>
-                <thead>
-                    <tr>
-                        <th>Application ID</th>
-                        <th>Student Roll</th>
-                        <th>Student Name</th>
-                        <th>Department</th>
-                        <th>Specialisation</th>
-                        <th>Job ID</th>
-                        <th>Company</th>
-                        <th>Application Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['application_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['student_roll'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['StudentName'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['StudentDept'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['StudentSpecialisation'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['job_post_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['recruiting_company'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['application_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?php echo htmlspecialchars($row['application_status'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td>
-                                <form method="post" action="update_application_status.php">
-                                    <input type="hidden" name="application_id" value="<?php echo htmlspecialchars($row['application_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
-                                    <select name="new_status">
-                                        <option value="Applied" <?php if ($row['application_status'] == 'Applied') echo 'selected'; ?>>Applied</option>
-                                        <option value="Shortlisted" <?php if ($row['application_status'] == 'Shortlisted') echo 'selected'; ?>>Shortlisted</option>
-                                        <option value="Rejected" <?php if ($row['application_status'] == 'Rejected') echo 'selected'; ?>>Rejected</option>
-                                        <option value="Selected" <?php if ($row['application_status'] == 'Selected') echo 'selected'; ?>>Selected</option>
-                                    </select>
-                                    <input type="submit" value="Update Status">
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>Application ID</th>
+            <th>Student Roll</th>
+            <th>Student Name</th>
+            <th>Department</th>
+            <th>Specialisation</th>
+            <th>Job ID</th>
+            <th>Company</th>
+            <th>Application Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($row['application_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['student_roll'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['StudentName'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['StudentDept'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['StudentSpecialisation'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['job_post_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['recruiting_company'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['application_date'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php echo htmlspecialchars($row['application_status'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                <td id="actions-col">
+                    <form method="post" action="update_application_status.php">
+                        <input type="hidden" name="application_id" value="<?php echo htmlspecialchars($row['application_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                        <select name="new_status">
+                            <option value="Applied" <?php if ($row['application_status'] == 'Applied') echo 'selected'; ?>>Applied</option>
+                            <option value="Shortlisted" <?php if ($row['application_status'] == 'Shortlisted') echo 'selected'; ?>>Shortlisted</option>
+                            <option value="Rejected" <?php if ($row['application_status'] == 'Rejected') echo 'selected'; ?>>Rejected</option>
+                            <option value="Selected" <?php if ($row['application_status'] == 'Selected') echo 'selected'; ?>>Selected</option>
+                        </select>
+                        <input type="submit" value="Update" class="update-button">
+                    </form>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </tbody>
+</table>
+
             <div class="pagination">
                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                     <a href="list_applications.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>

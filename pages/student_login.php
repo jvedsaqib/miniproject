@@ -17,7 +17,7 @@ $otp_sent = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string($_POST['email']);
     
-    $sql = "SELECT * FROM student_login_credentials WHERE email = ?";
+    $sql = "SELECT * FROM students WHERE StudentEmail = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="topnav" id="home-topnav">
         <nav>
-            <a href="../home.php">Home</a>
+            <a href="../index.php">Home</a>
         </nav>
     </div>
 

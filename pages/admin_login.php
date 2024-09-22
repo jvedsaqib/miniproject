@@ -47,7 +47,7 @@
 
     <div class="topnav" id="home-topnav">
             <nav>
-                <a href="../home.php">Home</a>
+                <a href="../index.php">Home</a>
             </nav>
     </div>
 
