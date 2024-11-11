@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  Created by <a href="https://github.com/jvedsaqib">@jvedsaqib</a>
+  Developed by <a href="https://github.com/jvedsaqib">@jvedsaqib</a>
 </p>
 
 A comprehensive web-based system to manage the placement process, student records, and job postings for educational institutions.
