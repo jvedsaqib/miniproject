@@ -1,6 +1,5 @@
 # Placement Management System
 
-
 <p align="center">
   <img src="https://avatars.githubusercontent.com/jvedsaqib?s=900" alt="Author Avatar" width="200" height="200" style="border-radius: 50%;">
 </p>
