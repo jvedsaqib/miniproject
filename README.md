@@ -11,7 +11,6 @@
 A comprehensive web-based system to manage the placement process, student records, and job postings for educational institutions.
 
 ## Features
-
 ### For Students
 - Personal profile management
 - View and apply for job postings
